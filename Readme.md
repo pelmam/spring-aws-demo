@@ -38,7 +38,7 @@ Or jar execution:
 You can also control some arguments, e.g.:
 > java -jar target/spring-aws-demo-0.0.1.jar --server.port=8081 --GREET_ENDING="Have a good one!"
 ```
-Point the browser at:
+Now point the browser at the app (assuming you chose port 8080):
 ```
 http://localhost:8080/greet-app
 ```
