@@ -9,7 +9,7 @@ may fail depending on setup.
 
 |Spring Boot App|AWS Deployment|
 |---------------|--------------|
-|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="300"/>|<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="350"/>|
+|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>|<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="450"/>|
 
 
 ## The Basic App
