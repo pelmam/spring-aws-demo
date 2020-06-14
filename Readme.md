@@ -7,7 +7,7 @@ Its main purpose is to to demonstrate deployment to AWS!
 The app's endpoints are pretty simple, but some of them use network or file resources, which
 may fail depending on setup.
 
-![diagram](docs/doc-img/diagram-lb.png?s=100)
+<img src='docs/doc-img/diagram-lb.png' width='100' height='100')
 ![app](docs/doc-img/tester_app_large.png)
 
 ## The Basic App
