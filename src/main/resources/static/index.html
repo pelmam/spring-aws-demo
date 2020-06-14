@@ -1,0 +1,48 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="greet.css">
+</head>
+<body>
+	<div id="main1" class="main-div">
+		<div id="instruct-text">
+			<h1>Spring Boot Demo - on AWS!</h1>
+			<p>Simple Spring Boot demo, which we'll deploy to AWS.</p>
+			<p>
+			Try the following endpoints - some of them access files or ports, which might 
+			fail depending on setup! 
+			</p>
+		</div><!-- 
+		(This comment helps guarantee inline-block)
+		--><div id="instruct-img">
+			<img alt="aws diagram" src="img/aws-architecture.png"/>
+		</div><!--
+	--></div>
+	<div id="main2" class="main-div">
+		<ul class='images-list'>
+			<li class="greet">
+				<a href="greet?name=john">Greet</a>
+			</li>
+			<li class="disk">
+				Disk
+				<a href="resource/disk-write?file=file1.txt&text=hello">Write</a>
+				and
+				<a href="resource/disk-read?file=file1.txt">Read</a>
+			</li>
+			<li class="env">
+				<a href="resource/env?name=Path">Env</a>
+			</li>
+			<li class="network">
+				<a href="resource/http-client?url=https://google.com">Https Client</a>
+				or at least 
+				<a href="resource/ping?host=127.0.0.1">Ping</a>
+			</li>			
+			<li class="home">
+				<a href="resource/my-host">My Host</a>
+			</li>
+			<li class="health">
+				<a href="actuator/health">Health</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

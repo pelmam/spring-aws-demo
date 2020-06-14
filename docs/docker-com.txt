@@ -1,0 +1,8 @@
+copy ../target/*.jar .
+docker build -t pel-hi .
+docker run --name pel1 --detach --env MSG2=Muha -p 8081:8080 pel-hi
+echo Please try: http://localhost:8081/hiapp
+
+REM or with mount:
+REM docker run --name pelhi1 --detach --env MSG2=Muha -p 8081:8080 --mount type=bind,src=c:/tpm/aaa/,dst=/var/aaa/ pel-hi
+REM echo Please try: http://localhost:8081/hiapp/disk-w?file=/var/aaa/hi.txt

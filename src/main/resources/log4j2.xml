@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  	<Properties>
+  		<Property name="dateShort">%d{HH:mm:ss}</Property>
+  		<Property name="dateLong">%d{yyyy-MM-dd HH:mm:ss}</Property>
+  		<Property name="layoutPart1">%style{%-5level} %style{%-30C{1.}}:</Property>
+  		<Property name="layoutPart2"> %msg%n%throwable</Property>
+  		<!-- 
+        <Property name="layout1">%style{%-5level} %style{%-25C{1.}}: %msg%n%throwable</Property>
+		-->
+		<Property name="logDir">./logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${dateShort} ${layoutPart1} ${layoutPart2}"/>
+		</Console>
+		<RollingFile name="File"
+			fileName=   "${logDir}/greet.log" 
+			filePattern="${logDir}/$${date:yyyy-MM}/greet-%d{-dd-MMMM-yyyy}-%i.log.gz">
+			<PatternLayout pattern="${dateLong} ${layoutPart1} ${layoutPart2}"/>
+			<Policies>
+				<!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingFile>
+
+	</Appenders>
+
+	<Loggers>
+		<!-- LOG everything at INFO level -->
+		<Root level="warn" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+		<Logger name="pelit" level="trace">
+		</Logger>
+	</Loggers>
+
+</Configuration>

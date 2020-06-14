@@ -1,0 +1,76 @@
+/*=================================================
+Greeting styling:
+=================================================*/
+html{
+	font-family: Helvetica, Arial
+}
+div.main-div h1 {
+	font-size:16px;
+	color: #29a1df
+}
+div.main-div {
+	width: 50%;
+	max-width: 500px;
+	border: 2px solid gray;
+	border-radius: 10px;
+	margin: 15px;
+	padding: 10px;
+	font-size: 12px;
+}
+#instruct-text{
+	display: inline-block;
+	width:50%;
+	vertical-align:top;
+	padding: 15px 15px 15px 15px;
+}
+#instruct-img{
+	display: inline-block;
+	width: 30%;
+	vertical-align:middle;
+	padding: 15px 15px 15px 15px;
+	margin-right:0;
+}
+#instruct-img img{
+	width:200px;
+	height:200px;
+}
+/*=================================================
+Bullted list of links:
+=================================================*/
+
+ul.images-list {
+    list-style-type: none;
+}
+.images-list li {   
+	padding:10px;
+}
+.images-list li::before {   
+	content: '';   
+    display: inline-block;   
+    height: 20px;   
+    width: 20px;    
+    background-size: 20px;   
+    background-image: url('/greet-app/img/home.ico'); /* default, overridden below*/   
+    background-repeat: no-repeat;   
+    margin-right: 10px;
+    background-position: center center;
+    vertical-align: middle;
+}
+.images-list li.greet::before {   
+    background-image: url('/greet-app/img/greet.png');   
+}
+.images-list li.network::before {   
+    background-image: url('/greet-app/img/novula/network.png');   
+}
+.images-list li.home::before {   
+    background-image: url('/greet-app/img/home.ico');   
+}
+.images-list li.env::before {   
+    background-image: url('/greet-app/img/novula/env.png');   
+}
+.images-list li.disk::before {   
+    background-image: url('/greet-app/img/disk.ico');   
+}
+.images-list li.health::before {   
+    background-image: url('/greet-app/img/health.ico');   
+}

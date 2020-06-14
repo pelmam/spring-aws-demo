@@ -1,0 +1,21 @@
+# Spring Boot Tester - for AWS deployment
+
+## Overview
+This is a simple Spring Boot Demo.
+Our main purpose shall be to demonstrate how to deploy to AWS!
+
+The app's endpoints are pretty simple, but some of them use network or file resources, which
+may fail depending on setup.
+
+![diagram][diagramImg] | ![app][appImg]
+[appImg]: /sample.jpg '100x100'
+[diagramImg]: /sample.jpg '100x100'
+
+## The Basic App
+* Running: > mvnw spring-boot:run
+* Point browser at http://localhost:8080/greet
+
+* Packaging: >mvnw clean package spring-boot:repackage
+* Running from jar: >java -jar bootHi.jar --server.port=8081 someOtherArgs
+
+
