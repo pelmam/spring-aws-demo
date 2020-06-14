@@ -7,10 +7,8 @@ Its main purpose is to to demonstrate deployment to AWS!
 The app's endpoints are pretty simple, but some of them use network or file resources, which
 may fail depending on setup.
 
-<img raw="true" src="docs/doc-img/diagram-lb.png" width="100"/>
-
-![network](docs/doc-img/diagram-lb.png)
-![app](docs/doc-img/tester_app_large.png)
+<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="200"/>
+<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="200"/>
 
 ## The Basic App
 * Running: > mvnw spring-boot:run
