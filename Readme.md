@@ -1,8 +1,8 @@
-# Spring Boot Tester - for AWS deployment
+# Spring Boot Demo: AWS deployment!
 
 ## Overview
 This is a simple Spring Boot Demo.
-Our main purpose shall be to demonstrate how to deploy to AWS!
+Its main purpose is to to demonstrate deployment to AWS!
 
 The app's endpoints are pretty simple, but some of them use network or file resources, which
 may fail depending on setup.
