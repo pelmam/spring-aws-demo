@@ -10,9 +10,9 @@ The only exception is the button icons, that belong to all-free.download.com and
 2.	Disclaimer of liability: this tutorial was developed for fun.
 	If you consider using the information for critical usage, it is your responsibility
 	to double check and re-validate the information. It could have errors or oversights.
-	The author does not assume any responsibility for any damages (direct or indirect) incurred for any damages incurred from this tutorial.
+	The author does not assume any responsibility for any damages (direct or indirect) incurred from this tutorial.
 
 3.	This disclaimer of liability includes (but is not limited to) AWS billing.
-	When using AWS, it is your responsibility to use AWS documentation and support in order
+	When using AWS, it is your responsibility to consult AWS documentation & support in order
 	to find out the expected charges, configure billing alerts, remove un-used items etc.
 	
