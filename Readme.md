@@ -7,9 +7,9 @@ Its main purpose is to to demonstrate deployment to AWS!
 The app's endpoints are pretty simple, but some of them use network or file resources, which
 may fail depending on setup.
 
-|Deployment|The App|
-|----------|-------|
-|<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="300"/>|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="200"/>|
+|Spring Boot App|AWS Deployment|
+|---------------|--------------|
+|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="300"/>|<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="350"/>|
 
 
 ## The Basic App
