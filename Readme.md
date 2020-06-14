@@ -32,18 +32,18 @@ Running:
 Using maven:
 > mvnw spring-boot:run
 
-Proper execution through the jar:
->java -jar target/spring-aws-demo-0.0.1.jar
+Or jar execution:
+> java -jar target/spring-aws-demo-0.0.1.jar
 
 You can also control some arguments, e.g.:
->java -jar target/spring-aws-demo-0.0.1.jar --server.port=8081 --GREET_ENDING="Have a good one!"
+> java -jar target/spring-aws-demo-0.0.1.jar --server.port=8081 --GREET_ENDING="Have a good one!"
 ```
-View the results:
+Point the browser at:
 ```
-http://localhost:8080/greet
+http://localhost:8080/greet-app
 ```
 <img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>
 
-Feel free to press some of the items - 'Greet' is the simplest and likely to work.
-Other actions would access resources such as files or network, and might fail if the access is restricted (that's the whole point! E.g. if we later deploy into an AWS network that limits outbound http connections, than the corresponding action will fail).
+Feel free to press the items - 'Greet' is the simplest and rarely fails.
+Other actions would access resources such as files or network, and might fail if access is restricted (that's the whole point! E.g. if we later deploy into an AWS network that limits outbound http connections, than the corresponding action will fail).
 
