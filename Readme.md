@@ -5,7 +5,7 @@ This is a simple Spring Boot Demo.
 Its main purpose is to to demonstrate deployment to AWS!
 
 The app's endpoints are pretty simple, but some of them use network or file resources, which
-may fail depending on setup.
+might fail depending on setup.
 
 <br/>
 
