@@ -1,4 +1,5 @@
 # Spring Boot Demo: AWS deployment!
+## By Pelit Mamani
 
 ## Overview
 This is a simple Spring Boot Demo.
@@ -11,7 +12,7 @@ might fail depending on setup.
 
 |Spring Boot App|AWS Deployment|
 |---------------|--------------|
-|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="450"/>|
+|<img alt="app" raw="true" src="docs/doc-img/boot-app.png" width="350"/>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="450"/>|
 
 <br/>
 
@@ -42,8 +43,35 @@ Now point the browser at the app (assuming you chose port 8080):
 ```
 http://localhost:8080/greet-app
 ```
-<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>
-
+<img alt="app" raw="true" src="docs/doc-img/boot-app.png" width="350"/>
+ 
 Feel free to press the items - 'Greet' is the simplest and rarely fails.
 Other actions would access resources such as files or network, and might fail if access is restricted (that's the whole point! E.g. if we later deploy into an AWS network that limits outbound http connections, than the corresponding action will fail).
 
+
+## AWS Deployments
+Our purpose is to explore various deployment options, such as
+-	Single instance, versus using a load balancer (ALB), versus auto scaling
+-	Manual deployment
+-	CloudFormation (under construction - coming soon)
+-	Docker deployment (under construction - coming soon)
+
+## AWS Deployment - manual, single ec2 instance
+Let's start with the simplest option: manual deployment through the AWS console,
+using the simplest single-instance configuration.
+
+** Prerequisites & Disclaimer:**
+* If you don't have an AWS account yet, you might consider [AWS trial free tier](https://aws.amazon.com/free/).
+* However, if you are new to AWS, please be **very careful with billing**: consult the AWS documentation & support, double-check if items are eligible for the free tier (even items mentioned in this demo - there could be errors, oversights, or info might become outdated). 
+* Please explore billing best practices such as: setting up **billing alerts**, terminating unused resources, **not leaving unnecessary instances running overnight** etc.
+* Please note this demo makes **security compromises for the sake of simplicity.** This is not production-ready.
+
+** Our First Deployment:** <br/>
+<br/>
+<img alt="app" raw="true" src="docs/doc-img/diagram-simple.png" width="350"/>
+<br/>
+
+More accurately, this will require:
+* A **vpc** (virtual private cloud): this would represent your network resources. A default is provided, but we'll set up a new one - for better understanding
+* A **subnet**: representing the internal network where your instance(s) would run, spanning some range of IP addresses, and residing in one physical location (availability zone). This means it is not incredibly protected against natural disasters etc.
+* An *internet gateway**: geteway to the outside world (the internet). Once we connect our subnet to this gateway,  

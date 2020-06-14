@@ -1,0 +1,22 @@
+
+-	Touring the sample Spring Boot app:
+	*	Entry point @SpringBootApplication 
+		
+		-	Spring bean declarations:
+			Explicit declaration vs auto-scanned
+			Injections eg @Autowired + the beautiful motivation for this!	
+
+		-	View some of the app's intrastructure, such as ControllerAdvise for error handling,
+			listeners, interceptors or filters for debugging, etc.
+
+		-	View the logic, @RestControllers, @Service etc
+			
+	*	application.properties
+		application-test.properties
+		greet.properties
+		Injecting env variables and command line args!
+	
+	*	static pages
+			
+	*	Peek at the test, that uses TestRestTemplate
+
