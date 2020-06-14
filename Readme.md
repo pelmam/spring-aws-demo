@@ -10,14 +10,35 @@ may fail depending on setup.
 
 |Spring Boot App|AWS Deployment|
 |---------------|--------------|
-|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>&nbsp;&nbsp;|&nbsp;&nbsp;<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="450"/>|
+|<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;nbsp;<img alt="diagram" raw="true" src="docs/doc-img/diagram-lb.png" width="450"/>|
 
 
-## The Basic App
-* Running: > mvnw spring-boot:run
+
+## Testing the Spring Boot app locally
+First, try the app locally:
+* Pull the project code
+* View the application.properties - feel free to change ports if needed:
+```
+spring-aws-demo/src/main/resources/application.properties
+spring-aws-demo/src/main/resources/application-test.properties
+ 
+* Open the command prompt in the project root (/spring-aws-demo/)
+* Packaging: 
+``` 
+> mvnw clean package spring-boot:repackage
+```
+* Running: 
+```
+Using maven:
+> mvnw spring-boot:run
+Proper execution through the jar:
+>java -jar target/spring-aws-demo-0.0.1.jar
+You can also control some arguments, e.g.:
+>java -jar target/spring-aws-demo-0.0.1.jar --server.port=8081 --GREET_ENDING="Have a good one!"
+
+```
 * Point browser at http://localhost:8080/greet
 
-* Packaging: >mvnw clean package spring-boot:repackage
-* Running from jar: >java -jar bootHi.jar --server.port=8081 someOtherArgs
+* Running from jar: 
 
 

@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>demo-group</groupId>
-	<artifactId>hi-web</artifactId>
+	<artifactId>spring-aws-demo</artifactId>
 	<version>0.0.1</version>
-	<name>hi-web</name>
-	<description>Simple Spring-boot application for exploring deployment options</description>
+	<name>spring-aws-demo</name>
+	<description>Simple Spring-boot application for exploring AWS deployment options</description>
 
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
