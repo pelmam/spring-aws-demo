@@ -17,17 +17,17 @@ may fail depending on setup.
 
 ## Testing the Spring Boot app locally
 First try the app locally:
-Pull the project code, and view the application.properties - there you can change ports if needed:
+Pull the code, and view the application.properties - there you can change ports if needed:
 ```
 spring-aws-demo/src/main/resources/application.properties
 spring-aws-demo/src/main/resources/application-test.properties
- 
+```
 Open the command prompt in the project root (/spring-aws-demo/)
 And package the app into a jar:
 ``` 
 > mvnw clean package spring-boot:repackage
 ```
-* Running: 
+Running: 
 ```
 Using maven:
 > mvnw spring-boot:run
@@ -42,6 +42,7 @@ View the results:
 ```
 http://localhost:8080/greet
 ```
+<img alt="app" raw="true" src="docs/doc-img/tester_app_large.png" width="350"/>
 
 Feel free to press some of the items - 'Greet' is the simplest and likely to work.
 Other actions would access resources such as files or network, and might fail if the access is restricted (that's the whole point! E.g. if we later deploy into an AWS network that limits outbound http connections, than the corresponding action will fail).
