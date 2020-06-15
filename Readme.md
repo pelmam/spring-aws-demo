@@ -67,10 +67,9 @@ Prerequisites & Disclaimer:
 
 ## AWS Deployment - manual, single ec2 instance
 Let's start with the simplest option: manual deployment through the AWS console,
-using the simplest single-instance configuration.
+using the simplest single-instance configuration: 
 
-** Our First Deployment:** <br/>
-<br/>
+<br/><br/>
 <img alt="app" raw="true" src="docs/doc-img/diagram-simple.png" width="350"/>
 <br/>
 
