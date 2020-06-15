@@ -82,10 +82,10 @@ This will require:
 1. **Routing & security rules** - in AWS entities such as: **Route Table, Network ACL, Security Group**.
 <br/>
 Effects on our app:<br/><br/>
-<img raw="true" src="src/main/resources/static/img/greet.png" width="20"/>&nbsp;**Greet:** Our Spring Boot app will only respond if the subnet is properly configured for external http communication! Feel free to see how it stops responding if you misconfigure the gateway, route table, NACL or security group. <br/><br/>
-<img raw="true" src="src/main/resources/static/img/disk.ico" width="20"/>&nbsp;**Disk I/O:** Our ec2 is provided with storage, so this should work (unless you generate lots of huge files). But how long will your file be available? This depends on the storage attachment policy - if the storage is "attached" to the ec2, and the ec2 is terminated, you'd lose your data. That's a big 'Gotcha' that is better discovered in this test, and not in production...<br/><br/>
-<img raw="true" src="src/main/resources/static/img/env.ico" width="20"/>&nbsp;**Environment variables:** Feel free to set them up, and watch the effect. <br/><br/>
-<img raw="true" src="src/main/resources/static/img/cpu.ico" width="20"/>&nbsp;**No Scaling Yet:** If we overload the CPU, well, tough luck - all other requests will slow down. This can be solved by horizontal scaling - namely more ec2 instances. Better still, if we ask AWS to automatically add/remove ec2's depending on the load - that's elasticity! <br/><br/>
+<img raw="true" src="src/main/resources/static/img/greet.png" width="20"/>&nbsp Greet: Our Spring Boot app will only respond if the subnet is properly configured for external http communication! Feel free to see how it stops responding if you misconfigure the gateway, route table, NACL or security group. <br/><br/>
+<img raw="true" src="src/main/resources/static/img/disk.ico" width="20"/>&nbsp; Disk I/O: Our ec2 is provided with storage, so this should work (unless you generate lots of huge files). But how long will your file be available? This depends on the storage attachment policy - if the storage is "attached" to the ec2, and the ec2 is terminated, you'd lose your data. That's a big 'Gotcha' that is better discovered in this test, and not in production...<br/><br/>
+<img raw="true" src="src/main/resources/static/img/env.ico" width="20"/>&nbsp; Environment variables: Feel free to set them up, and watch the effect. <br/><br/>
+<img raw="true" src="src/main/resources/static/img/cpu.ico" width="20"/>&nbsp; No Scaling Yet: If we overload the CPU, well, tough luck - all other requests will slow down. This can be solved by horizontal scaling - namely more ec2 instances. Better still, if we ask AWS to automatically add/remove ec2's depending on the load - that's elasticity! <br/><br/>
 
 ## Under construction
 Coming up soon
