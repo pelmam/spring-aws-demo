@@ -87,4 +87,9 @@ Locate the following two menu items: **region** and **services**. Chose a region
 
 <img raw="true" src=""docs/doc-img/diagram-simple.png"" width=100"/> 
 
-
+## Under construction
+Coming up soon
+*	Setting up vcp, subnet, ec2 etc (single instance) with CloudFormation
+*	Auto scaling. For this, we'll add a SpringBoot controller that intentionally overloads 
+	the cpu, and watch it cause rescaling
+*	 
