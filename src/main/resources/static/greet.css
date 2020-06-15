@@ -65,6 +65,9 @@ ul.images-list {
 .images-list li.home::before {   
     background-image: url('/greet-app/img/home.ico');   
 }
+.images-list li.cpu::before {   
+    background-image: url('/greet-app/img/cpu.ico');   
+}
 .images-list li.env::before {   
     background-image: url('/greet-app/img/novula/env.png');   
 }

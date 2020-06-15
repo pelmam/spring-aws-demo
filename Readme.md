@@ -75,21 +75,22 @@ using the simplest single-instance configuration.
 <br/>
 
 This will require:
-1. An **ec2 instance**, representing the virtual server where our Spring Boot app will run. It will be provided with most items you'd expect on a computer: CPU, disk space, network, operating system etc. It's listed first, but we'll actually set it up last - after our network is ready.
-1. A **vpc** (virtual private cloud): representing a virtual network that will be provided for us, spanning a range of IP addresses. It can contain several subnets in several availability zones.
-1. A **subnet**: representing the internal network where our ec2 instance would run. A subnet uses a sub-range of IP addresses from the vpc. Each subnet resides in one physical location (availability zone) - so is not incredibly protected against natural disasters.
+1. An **ec2 instance**, representing the virtual server where our Spring Boot app will run. It will be provided with most items you'd expect on a computer: CPU, disk space (ESB), network, operating system etc. We'll set it up last - after our network is ready.
+1. A **vpc** (virtual private cloud): representing a virtual network that will be provided for us, spanning a range of IP addresses. It can contain several subnets in several availability zones (though it will be confined to one region)
+1. A **subnet**: representing the internal network where our ec2 instance would run. A subnet uses a sub-range of IP addresses from the vpc. Each subnet resides in one physical location (availability zone) - so an architecture based on a single subnet is not the best protection against natural disasters.
 1. An **internet gateway**: geteway to the outside world - the internet. Once we connect this gateway to our subnet (with some routing & security configurations), our Spring Boot app will be able to serve browsers all over the world! 
 1. **Routing & security rules** - in AWS entities such as: **Route Table, Network ACL, Security Group**.
-
-** Let's get started:**
-Log into the AWS console. For this demo we'll use the root user (the one we used for opening the account), though it's not very secure.
-Locate the following two menu items: **region** and **services**. Chose a region and stick with it - if it accidentally changes, things might misbehave. **Services** is our link for various services, such as vpc, ec2 and much more.
-
-<img raw="true" src=""docs/doc-img/diagram-simple.png"" width=100"/> 
+<br/>
+Effects on our app:<br/><br/>
+<img raw="true" src="src/main/resources/static/img/greet.png" width="20"/>&nbsp;**Greet:** Our Spring Boot app will only respond if the subnet is properly configured for external http communication! Feel free to see how it stops responding if you misconfigure the gateway, route table, NACL or security group. <br/><br/>
+<img raw="true" src="src/main/resources/static/img/disk.ico" width="20"/>&nbsp;**Disk I/O:** Our ec2 is provided with storage, so this should work (unless you generate lots of huge files). But how long will your file be available? This depends on the storage attachment policy - if the storage is "attached" to the ec2, and the ec2 is terminated, you'd lose your data. That's a big 'Gotcha' that is better discovered in this test, and not in production...<br/><br/>
+<img raw="true" src="src/main/resources/static/img/env.ico" width="20"/>&nbsp;**Environment variables:** Feel free to set them up, and watch the effect. <br/><br/>
+<img raw="true" src="src/main/resources/static/img/cpu.ico" width="20"/>&nbsp;**No Scaling Yet:** If we overload the CPU, well, tough luck - all other requests will slow down. This can be solved by horizontal scaling - namely more ec2 instances. Better still, if we ask AWS to automatically add/remove ec2's depending on the load - that's elasticity! <br/><br/>
 
 ## Under construction
 Coming up soon
-*	Setting up vcp, subnet, ec2 etc (single instance) with CloudFormation
-*	Auto scaling. For this, we'll add a SpringBoot controller that intentionally overloads 
-	the cpu, and watch it cause rescaling
-*	 
+*	Setting it up, with both the AWS console (video) and with CloudFormation 
+*	Auto scaling. We'll set up auto scaling, overload the cpu, and see if new instances will be automatically launched
+*	Load balancer (ALB)
+*	(Just please remember to stop instances and other resources!!)
+

@@ -9,9 +9,5 @@ import lombok.ToString;
 public class GreetingCard {
 	private String name;
 	private String remarks;
-	private int luckyNumber = random();
-	
-	private static int random() {
-		return (int)(1000*Math.random());
-	}
+	private int luckyNumber;
 }

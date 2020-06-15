@@ -30,7 +30,7 @@
 
 	<Loggers>
 		<!-- LOG everything at INFO level -->
-		<Root level="warn" additivity="false">
+		<Root level="warn">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="File" />
 		</Root>

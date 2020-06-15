@@ -13,6 +13,7 @@ public class GreetService {
 		return GreetingCard.builder()
 				.name(name)
 				.remarks("Remark:"+message)
+				.luckyNumber((int)(1000*Math.random()))
 				.build();
 	}
 }
