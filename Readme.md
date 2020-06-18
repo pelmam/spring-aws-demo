@@ -67,7 +67,8 @@ Let's start with this simple, single-instance configuration:
 <br/><br/>
 
 Let's get started! Log into the AWS console, and choose a **region**.
-Amazon has several geographical regions, that are separate from each other (some of them are even in different continents). Our entire configuration will reside in on region, say, Oregon. 
+Amazon has several geographical regions, that are separate from each other (some of them are even in different continents). Our entire configuration will reside in on region, say, Oregon. <br/>
+In production, please chose the region carefully - is it close to your users, for better latency? Does you business need to meet any legal requirements about server location?
 <br/><br/>
 <img alt="app" raw="true" src="docs/doc-img/deploy-single/aws-region.png" width="500"/>
 <br/>
@@ -111,25 +112,66 @@ To summarize, our network has both a "router" (Route Table) that directs its com
 <img alt="igw" raw="true" src="docs/doc-img/deploy-single/aws-subnet-nacl-B.png" width="500"/><br/>
 <br/>
 
-And finally, we're getting close to our much-anticipated ec2 instance - our server!<br/>
-It would need a security group - the security rules for instances level.<br/>
-Let's create a security group "greetPublicSG", edit its inbound and outbound rules, and let them both allow "All Traffic" From/To "Anywhere":
+The last network-related configuration would be a security group - these are the finer-grained security rules for the instance level (namely for our server). <br/>
+Let's create a security group "greetPublicSG", edit its inbound and outbound rules, and let them both allow "All Traffic" from/to "Anywhere":
 <br/>
 <img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group.png" width="500"/><br/>
 <br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-B.png" width="500"/><br/>
+<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-C.png" width="500"/><br/>
+<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-D.png" width="500"/><br/>
+<br/>
 
-And now our ec2 instance!
+And finally, to our much-anticipated ec2 instance! <br/>
+Choose Services -> ec2 -> Instances -> Launch Instance <br/>
+And select the machine image for Amazon Linux 64bit, that is free-tier eligible:<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-A-launch.png" width="500"/><br/>
+<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-B-ami.png" width="500"/><br/>
+<br/>
+Next, we're asked to chose the instance type - to determine how much RAM, CUP etc our machine will have. Feel free to browse the impressive variety of types optimised for different purposes and different budgets, but we'll start with t2.micro, that is free-tier eligible:
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-C-micro.png" width="500"/><br/>
+<br/>
+Next, associate our instance with our subnet, and make sure it gets a public IP.<br/>
+Careful of typos, because some of them are hard to edit later): <br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-D-config.png" width="500"/><br/>
+<br/>
+This same page has an "advanced" section, which allows us to add a script that your server will execute on startup. Let's update yum, and install java11: <br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-E-userData.png" width="500"/><br/>
+<br/>
+Next comes storage configuration - our server's "hard drive".<br/>
+**One big "Gotcha" is the "delete on termination" checkbox!** This means our data will be lost when the ec2 instance is terminated. It's fine here, since our web server shouldn't write any critical data locally (business data should go to a database, and logs are better configured to stream to AWS Logs, though it won't be covered here). Remember that in an elastic environment, web server instances might be taken up and down depending on loads, they might be crashed and replaced, so they better not hold critical data. But if your ec2 is used for storage (e.g. setting up your own database, rather than Amazon's ready-made ones) then please avoid "deleting on termination".<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-F-storage.png" width="500"/><br/>
+<br/>
+Next is the security group - associate our server with our greetPublicSG that allows all communication:<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-H-secGroup.png" width="500"/><br/>
+<br/>
+Finally, we can launch the instance! <br/>
+On lanuch, you will get a .pem file (key pair) - keep it safely, and we'll later use it with Putty.
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-I-launch.png" width="500"/><br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-J-keypair.png" width="500"/><br/>
 
-Effects on our app:<br/><br/>
+Now our server is ready with a linux OS, and even java (that we downloaded on the "User Data" step above). We just need to upload & run our jar! There are a few ways to do that: 
+
+SORRY - THIS SECTION IS UNDER CONSTRUCTION, WILL BE UPDATED SOON
+<br/>
+<br/>
+<br/>
+<br/>
+
+EEffects on our app:<br/><br/>
 <img raw="true" src="src/main/resources/static/img/greet.png" width="20"/>Greet: Our Spring Boot app will only respond if the subnet is properly configured for external http communication! Feel free to see how it stops responding if you misconfigure the gateway, route table, NACL or security group. <br/><br/>
 <img raw="true" src="src/main/resources/static/img/disk.ico" width="20"/>Disk I/O: Our ec2 is provided with storage, so this should work (unless you generate lots of huge files). But how long will your file be available? This depends on the storage attachment policy - if the storage is "attached" to the ec2, and the ec2 is terminated, you'd lose your data. That's a big 'Gotcha' that is better discovered in this test, and not in production...<br/><br/>
 <img raw="true" src="src/main/resources/static/img/env.ico" width="20"/>Environment variables: Feel free to set them up, and watch the effect. <br/><br/>
 <img raw="true" src="src/main/resources/static/img/cpu.ico" width="20"/>No Scaling Yet: If we overload the CPU, well, tough luck - all other requests will slow down. This can be solved by horizontal scaling - namely more ec2 instances. Better still, if we ask AWS to automatically add/remove ec2's depending on the load - that's elasticity! <br/><br/>
 <br/>
 
-## Under construction
-Coming up soon
-*	Setting it up, with both the AWS console (video) and with CloudFormation 
+
+## Under construction - Coming up Soon
+*	Uploading the spring app jar - using WinSCP or downloading
+*	Automatic config using CloudFormation 
 *	Auto scaling. We'll set up auto scaling, overload the cpu, and see if new instances will be automatically launched
 *	Load balancer (ALB)
 *	(Just please remember to stop instances and other resources!!)
