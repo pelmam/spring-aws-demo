@@ -50,41 +50,82 @@ Other actions would access resources such as files or network, and might fail if
 <br/>
 <br/>
 
-## AWS Deployments
-Our purpose is to explore various deployment options, such as
-*	Single instance, versus using a load balancer (ALB), versus auto scaling
-*	Manual deployment
-*	CloudFormation (under construction - coming soon)
-*	Docker deployment (under construction - coming soon)
+## AWS Prerequisites & Disclaimer
 
-Prerequisites & Disclaimer:
 * If you don't have an AWS account yet, you might consider [AWS trial free tier](https://aws.amazon.com/free/).
-* However, if you are new to AWS, please be **very careful with billing**: consult the AWS documentation & support, double-check if items are eligible for the free tier (even items mentioned in this demo - there could be errors, oversights, or info might become outdated). 
-* Please explore billing best practices such as: setting up **billing alerts**, terminating unused resources, **not leaving unnecessary instances running overnight** etc.
-* Please note this demo makes **security compromises for the sake of simplicity.** This is not production-ready.
+* If you're new to AWS, please be careful with billing - don't leave unused instances running overnight! 
+* Please double-check before using anything, is it eligible for the free layer (even resources mentioned in this tutorial, as policies might change). You might also consider setting up billing alarms. 
+* This demo aims for simplicity - it's not production-ready,  and not very secure.
 
 <br/>
 
-## AWS Deployment - manual, single ec2 instance
-Let's start with the simplest option: manual deployment through the AWS console,
-using the simplest single-instance configuration: 
+## Deploying to a single ec2 instance
+Let's start with this simple, single-instance configuration: 
 
 <br/><br/>
 <img alt="app" raw="true" src="docs/doc-img/diagram-simple.png" width="350"/>
+<br/><br/>
+
+Let's get started! Log into the AWS console, and choose a **region**.
+Amazon has several geographical regions, that are separate from each other (some of them are even in different continents). Our entire configuration will reside in on region, say, Oregon. 
+<br/><br/>
+<img alt="app" raw="true" src="docs/doc-img/deploy-single/aws-region.png" width="500"/>
+<br/>
+<br/>
+Now, let's create a **vpc with IP range 10.0.0.0/16** and a **subnet with the sub-range 10.0.1/24**. <br/>
+The vpc will be our network, residing in one region. A vpc can have several subnets, that can reside in different availability zones (building). For simplicity we'll start with a single subnet in a single AZ, but it won't be the best protection against natural disasters.<br/>
 <br/>
 
-This will require:
-1. An **ec2 instance**, representing the virtual server where our Spring Boot app will run. It will be provided with most items you'd expect on a computer: CPU, disk space (ESB), network, operating system etc. We'll set it up last - after our network is ready.
-1. A **vpc** (virtual private cloud): representing a virtual network that will be provided for us, spanning a range of IP addresses. It can contain several subnets in several availability zones (though it will be confined to one region)
-1. A **subnet**: representing the internal network where our ec2 instance would run. A subnet uses a sub-range of IP addresses from the vpc. Each subnet resides in one physical location (availability zone) - so an architecture based on a single subnet is not the best protection against natural disasters.
-1. An **internet gateway**: geteway to the outside world - the internet. Once we connect this gateway to our subnet (with some routing & security configurations), our Spring Boot app will be able to serve browsers all over the world! 
-1. **Routing & security rules** - in AWS entities such as: **Route Table, Network ACL, Security Group**.
+For the vpc, chose Services->VPC->Your VPCs->Create VPC, then: <br/>
+<img alt="vpc" raw="true" src="docs/doc-img/deploy-single/aws-vpc.png" width="500"/><br/>
 <br/>
+For the subnet, chose Subnets-> Create subnet.<br/>
+Coose our vpc, our requires IP sub-range, and availability zone (which can either be chosen by you, or by aws). <br/>
+We'll call it "greetPublicSubnet" because we plan to connect it to the outside world (if we had more resources, that are only accessed internally from our Spring Boot application, e.g. a database - we could make a second, private subnet. But we don't need that here):<br/>
+<img alt="subnet" raw="true" src="docs/doc-img/deploy-single/aws-subnet.png" width="500"/><br/>
+<br/>
+
+We'll also need an internet gateway, to allow communication with the outside world.<br/>
+Select Internet Gateways -> Create Internet Gateway. <br/>
+After it's created, attach it to our vpc:<br/>
+
+<img alt="igw" raw="true" src="docs/doc-img/deploy-single/aws-igw.png" width="500"/><br/>
+<br/>
+<img alt="igw" raw="true" src="docs/doc-img/deploy-single/aws-igw-attach.png" width="500"/><br/>
+<br/>
+
+Next, we need to edit our subnet's **Route Table.**<br/>
+Originally it only allows internal communication; we'll add routing to the internet gateway, so that our subnet becomes exposed to the world.<br/>
+So, navigate to the subnet's Route Table, and there add a route to the internet gateway:
+ 
+<img alt="route" raw="true" src="docs/doc-img/deploy-single/aws-route-table.png" width="500"/><br/>
+<br/>
+<img alt="route" raw="true" src="docs/doc-img/deploy-single/aws-route-table-B.png" width="500"/><br/>
+<br/>
+
+Also check our subnet's NACL - its security rules. For this demo we'll leave the default that allows all communication, both inbound and outbound. In production, consider finer rules, e.g. "only http, https, and also ssh from my machine only". <br/>
+To summarize, our network has both a "router" (Route Table) that directs its communication, and a "firewall" (NACL) to fine-tune what specific protocols/destinations are allowed. 
+
+<img alt="igw" raw="true" src="docs/doc-img/deploy-single/aws-subnet-nactl.png" width="500"/><br/>
+<br/>
+<img alt="igw" raw="true" src="docs/doc-img/deploy-single/aws-subnet-nacl-B.png" width="500"/><br/>
+<br/>
+
+And finally, we're getting close to our much-anticipated ec2 instance - our server!<br/>
+It would need a security group - the security rules for instances level.<br/>
+Let's create a security group "greetPublicSG", edit its inbound and outbound rules, and let them both allow "All Traffic" From/To "Anywhere":
+<br/>
+<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group.png" width="500"/><br/>
+<br/>
+
+And now our ec2 instance!
+
 Effects on our app:<br/><br/>
 <img raw="true" src="src/main/resources/static/img/greet.png" width="20"/>Greet: Our Spring Boot app will only respond if the subnet is properly configured for external http communication! Feel free to see how it stops responding if you misconfigure the gateway, route table, NACL or security group. <br/><br/>
 <img raw="true" src="src/main/resources/static/img/disk.ico" width="20"/>Disk I/O: Our ec2 is provided with storage, so this should work (unless you generate lots of huge files). But how long will your file be available? This depends on the storage attachment policy - if the storage is "attached" to the ec2, and the ec2 is terminated, you'd lose your data. That's a big 'Gotcha' that is better discovered in this test, and not in production...<br/><br/>
 <img raw="true" src="src/main/resources/static/img/env.ico" width="20"/>Environment variables: Feel free to set them up, and watch the effect. <br/><br/>
 <img raw="true" src="src/main/resources/static/img/cpu.ico" width="20"/>No Scaling Yet: If we overload the CPU, well, tough luck - all other requests will slow down. This can be solved by horizontal scaling - namely more ec2 instances. Better still, if we ask AWS to automatically add/remove ec2's depending on the load - that's elasticity! <br/><br/>
+<br/>
 
 ## Under construction
 Coming up soon
