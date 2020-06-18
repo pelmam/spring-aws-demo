@@ -115,43 +115,43 @@ To summarize, our network has both a "router" (Route Table) that directs its com
 The last network-related configuration would be a security group - these are the finer-grained security rules for the instance level (namely for our server). <br/>
 Let's create a security group "greetPublicSG", edit its inbound and outbound rules, and let them both allow "All Traffic" from/to "Anywhere":
 <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group.png" width="500"/><br/>
+<img alt="sg-A" raw="true" src="docs/doc-img/deploy-single/aws-sec-group.png" width="500"/><br/>
 <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-B.png" width="500"/><br/>
+<img alt="sg-B" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-B.png" width="500"/><br/>
 <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-C.png" width="500"/><br/>
+<img alt="sg-C" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-C.png" width="500"/><br/>
 <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-D.png" width="500"/><br/>
+<img alt="sg-D" raw="true" src="docs/doc-img/deploy-single/aws-sec-group-D.png" width="500"/><br/>
 <br/>
 
 And finally, to our much-anticipated ec2 instance! <br/>
 Choose Services -> ec2 -> Instances -> Launch Instance <br/>
 And select the machine image for Amazon Linux 64bit, that is free-tier eligible:<br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-A-launch.png" width="500"/><br/>
+<img alt="ec2-launch" raw="true" src="docs/doc-img/deploy-single/aws-ec2-A-launch.png" width="500"/><br/>
 <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-B-ami.png" width="500"/><br/>
+<img alt="ec2-ami" raw="true" src="docs/doc-img/deploy-single/aws-ec2-B-ami.png" width="500"/><br/>
 <br/>
 Next, we're asked to chose the instance type - to determine how much RAM, CUP etc our machine will have. Feel free to browse the impressive variety of types optimised for different purposes and different budgets, but we'll start with t2.micro, that is free-tier eligible:
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-C-micro.png" width="500"/><br/>
+<img alt="ec2-micro" raw="true" src="docs/doc-img/deploy-single/aws-ec2-C-micro.png" width="500"/><br/>
 <br/>
 Next, associate our instance with our subnet, and make sure it gets a public IP.<br/>
 Careful of typos, because some of them are hard to edit later): <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-D-config.png" width="500"/><br/>
+<img alt="ec2-sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-D-config.png" width="500"/><br/>
 <br/>
 This same page has an "advanced" section, which allows us to add a script that your server will execute on startup. Let's update yum, and install java11: <br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-E-userData.png" width="500"/><br/>
+<img alt="ec2-userData" raw="true" src="docs/doc-img/deploy-single/aws-ec2-E-userData.png" width="500"/><br/>
 <br/>
 Next comes storage configuration - our server's "hard drive".<br/>
 **One big "Gotcha" is the "delete on termination" checkbox!** This means our data will be lost when the ec2 instance is terminated. It's fine here, since our web server shouldn't write any critical data locally (business data should go to a database, and logs are better configured to stream to AWS Logs, though it won't be covered here). Remember that in an elastic environment, web server instances might be taken up and down depending on loads, they might be crashed and replaced, so they better not hold critical data. But if your ec2 is used for storage (e.g. setting up your own database, rather than Amazon's ready-made ones) then please avoid "deleting on termination".<br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-F-storage.png" width="500"/><br/>
+<img alt="ec2-storage" raw="true" src="docs/doc-img/deploy-single/aws-ec2-F-storage.png" width="500"/><br/>
 <br/>
 Next is the security group - associate our server with our greetPublicSG that allows all communication:<br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-H-secGroup.png" width="500"/><br/>
+<img alt="ec2-sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-H-secGroup.png" width="500"/><br/>
 <br/>
 Finally, we can launch the instance! <br/>
 On lanuch, you will get a .pem file (key pair) - keep it safely, and we'll later use it with Putty.
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-I-launch.png" width="500"/><br/>
-<img alt="sg" raw="true" src="docs/doc-img/deploy-single/aws-ec2-J-keypair.png" width="500"/><br/>
+<img alt="ec2-launch-final" raw="true" src="docs/doc-img/deploy-single/aws-ec2-I-launch.png" width="500"/><br/>
+<img alt="ec2-keypair" raw="true" src="docs/doc-img/deploy-single/aws-ec2-J-keypair.png" width="500"/><br/>
 
 Now our server is ready with a linux OS, and even java (that we downloaded on the "User Data" step above). We just need to upload & run our jar! There are a few ways to do that: 
 
